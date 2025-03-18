@@ -1,13 +1,18 @@
 from bs4 import BeautifulSoup
+import configparser
 import requests
 import random
-import json
 import time
+import os
 
-LIMIT = 10
+config = configparser.RawConfigParser()
+config.read(".conf")
 
-# 10 minutes
-TIMEOUT = 10*60
+EMAILS_AMOUNT = config.getint('General', 'emails')
+TIMEOUT = config.getint('General', 'timeout')
+
+PROXIES_API = config.get('Proxy', 'url')
+PROXY_TIMEOUT = config.getint('Proxy', 'timeout')
 
 SYMBOLS = ['.', '-', '_']
 
@@ -16,9 +21,6 @@ with open('wordlists/firstnames.txt', 'r') as f:
 
 with open('wordlists/lastnames.txt', 'r') as f:
     LASTNAMES = f.read().splitlines()
-
-PROXIES_API = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
-PROXY_TIMEOUT = 30
 
 def get_proxy():
     start_time = time.time()
@@ -48,12 +50,13 @@ def generate_mail():
     email = firstname + symbol + lastname + str(number) + '@' + domain
 
 def main():
-    for _ in range(LIMIT):
+    for _ in range(EMAILS_AMOUNT):
         start_time = time.time()
         proxy = get_proxy()
         print(f"Using proxy: {proxy} (valid={is_valid_proxy(proxy)})")
         mail = generate_mail()
         # attendre reception d'un mail, timeout 10min
+
         time.sleep(1)
 
 
