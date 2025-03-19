@@ -1,13 +1,10 @@
+from libs import portswigger, yopmail, gemini
 from bs4 import BeautifulSoup
-import portswigger
 import configparser
 import requests
-import yopmail
-import gemini
 import random
 import string
 import time
-import os
 
 config = configparser.RawConfigParser()
 config.read(".conf")
