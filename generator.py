@@ -84,14 +84,14 @@ def main():
         start_time = time.time()
         proxy = get_proxy()
         mail = generate_mail()
+        name, domain = mail.split('@')
         print(f"Using proxy: {proxy} and {mail}")
 
-        message = gemini.get_response(mail.split('@')[0])
+        message = gemini.get_response(name)
         print(message)
 
-        # yopmail.get_mails(mail, proxy)
         print(f"Temps écoulé : {time.time() - start_time:.2f}s\n")
-        # portswigger.request_trial(mail)
+        # portswigger.request_trial(mail, message)
 
         # attendre reception d'un mail, timeout 10min
         time.sleep(1)

@@ -20,7 +20,7 @@ def fill_mail(mail, token):
         print(f"Error while filling email: {e}")
         return None
 
-def request_trial(mail):
+def request_trial(mail, message):
     name, domain = mail.split('@')
     session_id, token = init()
     if not session_id:
