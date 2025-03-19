@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
+import portswigger
 import configparser
 import requests
 import yopmail
+import gemini
 import random
 import string
 import time
@@ -87,8 +89,13 @@ def main():
         mail = generate_mail()
         print(f"Using proxy: {proxy} and {mail}")
 
-        yopmail.get_mails(mail, proxy)
+        message = gemini.get_response(mail.split('@')[0])
+        print(message)
+
+        # yopmail.get_mails(mail, proxy)
         print(f"Temps écoulé : {time.time() - start_time:.2f}s\n")
+        # portswigger.request_trial(mail)
+
         # attendre reception d'un mail, timeout 10min
         time.sleep(1)
 
