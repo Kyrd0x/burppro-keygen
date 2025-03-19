@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import configparser
 import requests
+import yopmail
 import random
 import string
 import time
@@ -86,7 +87,7 @@ def main():
         mail = generate_mail()
         print(f"Using proxy: {proxy} and {mail}")
 
-        check_emails(mail)
+        yopmail.get_mails(mail, proxy)
         print(f"Temps écoulé : {time.time() - start_time:.2f}s\n")
         # attendre reception d'un mail, timeout 10min
         time.sleep(1)
